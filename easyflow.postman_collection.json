@@ -1,0 +1,287 @@
+{
+  "info": {
+    "name": "EasyFlow API (Multi-tenant)",
+    "description": "Collection para testar a API NestJS multi-tenant do EasyFlow.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "tenantId",
+      "value": "org-a"
+    },
+    {
+      "key": "userId",
+      "value": "user-1"
+    },
+    {
+      "key": "mes",
+      "value": "2026-03"
+    },
+    {
+      "key": "fromDate",
+      "value": "2026-03-27"
+    },
+    {
+      "key": "toDate",
+      "value": "2026-03-27"
+    },
+    {
+      "key": "punchId",
+      "value": "PASTE_PUNCH_ID"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "health"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Tenant Context (requires x-tenant-id)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/tenant/context",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "tenant",
+            "context"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Workflows - List (isolated by tenant)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/workflows",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "workflows"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Workflows - Create (isolated by tenant)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Reembolso\",\n  \"descricao\": \"Workflow de exemplo\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/workflows",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "workflows"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pontos - Criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          },
+          {
+            "key": "x-user-id",
+            "value": "{{userId}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"latitude\": -23.55052,\n  \"longitude\": -46.633308,\n  \"observacao\": \"Ponto de exemplo\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pontos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pontos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pontos - Hoje",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          },
+          {
+            "key": "x-user-id",
+            "value": "{{userId}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/pontos/today",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pontos",
+            "today"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pontos - Por Mes",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          },
+          {
+            "key": "x-user-id",
+            "value": "{{userId}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/pontos?mes={{mes}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pontos"
+          ],
+          "query": [
+            {
+              "key": "mes",
+              "value": "{{mes}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pontos - Intervalo (from/to)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          },
+          {
+            "key": "x-user-id",
+            "value": "{{userId}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/pontos?from={{fromDate}}&to={{toDate}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pontos"
+          ],
+          "query": [
+            {
+              "key": "from",
+              "value": "{{fromDate}}"
+            },
+            {
+              "key": "to",
+              "value": "{{toDate}}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pontos - Solicitar Ajuste",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-tenant-id",
+            "value": "{{tenantId}}"
+          },
+          {
+            "key": "x-user-id",
+            "value": "{{userId}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"justificativa\": \"Ajuste de teste\",\n  \"novoTipo\": \"SAIDA\",\n  \"novoTimestamp\": \"2026-03-27T10:00:00Z\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/pontos/{{punchId}}/ajustes",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "pontos",
+            "{{punchId}}",
+            "ajustes"
+          ]
+        }
+      }
+    }
+  ]
+}

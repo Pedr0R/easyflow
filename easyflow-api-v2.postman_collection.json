@@ -1,0 +1,152 @@
+{
+  "info": {
+    "name": "EasyFlow API v2",
+    "description": "Collection atualizada para testes da API multi-tenant com autenticacao JWT.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "tenantId", "value": "org-a" },
+    { "key": "nome", "value": "Usuario Teste" },
+    { "key": "email", "value": "teste@easyflow.dev" },
+    { "key": "senha", "value": "123456" },
+    { "key": "token", "value": "PASTE_JWT_TOKEN" },
+    { "key": "mes", "value": "2026-03" },
+    { "key": "fromDate", "value": "2026-03-27" },
+    { "key": "toDate", "value": "2026-03-27" },
+    { "key": "punchId", "value": "PASTE_PUNCH_ID" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-tenant-id", "value": "{{tenantId}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"{{nome}}\",\n  \"email\": \"{{email}}\",\n  \"senha\": \"{{senha}}\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/register"
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-tenant-id", "value": "{{tenantId}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"senha\": \"{{senha}}\"\n}"
+        },
+        "url": "{{baseUrl}}/auth/login"
+      }
+    },
+    {
+      "name": "Auth - Me",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/auth/me"
+      }
+    },
+    {
+      "name": "Tenant - Context",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/tenant/context"
+      }
+    },
+    {
+      "name": "Workflows - List",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/workflows"
+      }
+    },
+    {
+      "name": "Workflows - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Reembolso\",\n  \"descricao\": \"Workflow de exemplo\"\n}"
+        },
+        "url": "{{baseUrl}}/workflows"
+      }
+    },
+    {
+      "name": "Pontos - Criar",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"tipo\": \"ENTRADA\",\n  \"latitude\": -23.55052,\n  \"longitude\": -46.633308,\n  \"observacao\": \"Ponto de exemplo\"\n}"
+        },
+        "url": "{{baseUrl}}/pontos"
+      }
+    },
+    {
+      "name": "Pontos - Hoje",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/pontos/today"
+      }
+    },
+    {
+      "name": "Pontos - Por Mes",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/pontos?mes={{mes}}"
+      }
+    },
+    {
+      "name": "Pontos - Intervalo",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/pontos?from={{fromDate}}&to={{toDate}}"
+      }
+    },
+    {
+      "name": "Pontos - Solicitar Ajuste",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"justificativa\": \"Ajuste de teste\",\n  \"novoTipo\": \"SAIDA\",\n  \"novoTimestamp\": \"2026-03-27T10:00:00Z\"\n}"
+        },
+        "url": "{{baseUrl}}/pontos/{{punchId}}/ajustes"
+      }
+    }
+  ]
+}

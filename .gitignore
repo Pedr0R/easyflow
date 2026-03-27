@@ -1,0 +1,15 @@
+.env
+.env.local
+
+node_modules/
+apps/*/node_modules/
+
+dist/
+build/
+.angular/
+.turbo/
+
+coverage/
+
+.DS_Store
+Thumbs.db
