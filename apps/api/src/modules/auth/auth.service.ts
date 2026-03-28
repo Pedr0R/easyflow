@@ -40,9 +40,9 @@ export class AuthService {
     return this.buildAuthResponse(user);
   }
 
-  async login(tenantId: string, dto: LoginDto) {
+  async login(dto: LoginDto) {
     const email = dto.email.trim().toLowerCase();
-    const user = await this.usersRepo.findOne({ where: { tenantId, email } });
+    const user = await this.usersRepo.findOne({ where: { email } });
 
     if (!user) {
       throw new UnauthorizedException('Credenciais invalidas.');

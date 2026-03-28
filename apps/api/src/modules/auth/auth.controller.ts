@@ -20,12 +20,8 @@ export class AuthController {
   }
 
   @Post('login')
-  login(@Req() req: Request, @Body() body: LoginDto) {
-    const tenantId = req.tenant?.tenantId;
-    if (!tenantId) {
-      throw new UnauthorizedException('Header x-tenant-id e obrigatorio.');
-    }
-    return this.authService.login(tenantId, body);
+  login(@Body() body: LoginDto) {
+    return this.authService.login(body);
   }
 
   @UseGuards(JwtAuthGuard)

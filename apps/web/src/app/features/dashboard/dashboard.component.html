@@ -1,0 +1,56 @@
+<div class="hero-section glass-panel">
+  <h1>Welcome back to EasyFlow</h1>
+  <p>Your team's productivity hub is ready.</p>
+  <div class="cta-group">
+    <button class="btn" 
+            [class.btn-primary]="nextPunchType === 'ENTRADA'"
+            [class.btn-secondary]="nextPunchType === 'SAIDA'"
+            [class.loading-pulse]="loadingPunchAction"
+            [disabled]="loadingPunchAction"
+            (click)="handlePunch()">
+      {{ nextPunchActionLabel }}
+    </button>
+  </div>
+</div>
+
+<div class="dashboard-grid">
+  <div class="card glass-panel">
+    <h3>Today's Time Tracking</h3>
+    
+    @if (loadingPunches) {
+      <p class="empty-state">Loading punches...</p>
+    } @else if (todayPunches.length === 0) {
+      <p class="empty-state">No punches yet for today.</p>
+    } @else {
+      <ul class="punch-list">
+        @for (p of todayPunches; track p.id) {
+          <li class="punch-item">
+            <div class="punch-main">
+              <span class="punch-type" [class.badge-entrada]="p.tipo === 'ENTRADA'" [class.badge-saida]="p.tipo === 'SAIDA'">
+                {{ p.tipo === 'ENTRADA' ? 'Punch In' : 'Punch Out' }}
+              </span>
+              <span class="punch-time">{{ p.timestamp | date:'mediumTime' }}</span>
+            </div>
+            <div class="punch-meta">
+              <span title="Coordinates">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: -1px;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                {{ p.latitude | number:'1.4-4' }}, {{ p.longitude | number:'1.4-4' }}
+              </span>
+            </div>
+            @if (p.observacao) {
+              <div class="punch-obs">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: -1px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                {{ p.observacao }}
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+  
+  <div class="card glass-panel">
+    <h3>Active Workflows</h3>
+    <p class="empty-state">0 pending approvals.</p>
+  </div>
+</div>

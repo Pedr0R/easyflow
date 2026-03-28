@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Dark and Purple Palette */
+  --color-bg-base: #0b0714;
+  --color-bg-surface: #140d24;
+  --color-bg-surface-elevated: #1e1336;
+  
+  --color-primary: #8a2be2; /* BlueViolet */
+  --color-primary-hover: #9b4dff;
+  --color-accent: #c084fc; 
+  --color-gradient-start: #7821c9;
+  --color-gradient-end: #4b1285;
+  
+  --color-text-primary: #f8f7fa;
+  --color-text-secondary: #a79fba;
+  --color-text-muted: #6b6382;
+
+  --color-border: #2a1f46;
+  --color-border-hover: #3d2d66;
+
+  --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-base: 16px;
+  
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+  --border-radius-full: 9999px;
+  
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root[data-theme='light'] {
+  --color-bg-base: #f4f2f8;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-elevated: #f0eaf7;
+  
+  --color-primary: #7821c9;
+  --color-primary-hover: #8a2be2;
+  --color-accent: #a855f7; 
+  --color-gradient-start: #8a2be2;
+  --color-gradient-end: #5b21b6;
+  
+  --color-text-primary: #1e1336;
+  --color-text-secondary: #4f4266;
+  --color-text-muted: #84769c;
+
+  --color-border: #e6def2;
+  --color-border-hover: #d3c4ea;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-bg-base);
+  background-image: 
+    radial-gradient(circle at 15% 50%, color-mix(in srgb, var(--color-primary) 10%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 85% 30%, color-mix(in srgb, var(--color-primary) 8%, transparent) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--border-radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--color-text-secondary);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Base Utility Classes */
+.glass-panel {
+  background: color-mix(in srgb, var(--color-bg-surface) 65%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 15%, transparent);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.15);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-md);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px 0 rgba(120, 33, 201, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(120, 33, 201, 0.5);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-gradient-start));
+}
+
+.btn-secondary {
+  background: color-mix(in srgb, var(--color-text-primary) 3%, transparent);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  background: color-mix(in srgb, var(--color-text-primary) 8%, transparent);
+  border-color: var(--color-border-hover);
+}
